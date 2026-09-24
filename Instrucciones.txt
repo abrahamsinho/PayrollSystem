@@ -1,0 +1,1 @@
+Se debe descargar la extensión live server para ejecutar

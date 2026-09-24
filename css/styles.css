@@ -1,0 +1,606 @@
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #1f2937;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(16, 185, 129, 0.13),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(5, 150, 105, 0.10),
+            transparent 30%
+        ),
+        #f5f7f6;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+.encabezado {
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #064e3b
+    );
+
+    color: white;
+
+    padding: 22px 30px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.20);
+}
+
+.logo {
+    max-width: 1100px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo-icono {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    background: #10b981;
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 15px rgba(16, 185, 129, 0.30);
+}
+
+.logo h1 {
+    font-size: 28px;
+
+    margin-bottom: 4px;
+}
+
+.logo p {
+    font-size: 13px;
+
+    color: #d1fae5;
+}
+
+
+/* =========================
+   MENÚ
+========================= */
+
+.menu {
+    background: #111827;
+
+    border-bottom:
+        2px solid #10b981;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.menu-contenedor {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-btn {
+    border: none;
+
+    background: transparent;
+
+    color: #d1d5db;
+
+    padding: 16px 20px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        color 0.2s,
+        transform 0.2s;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.menu-btn span {
+    color: #10b981;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.menu-btn:hover {
+    background: #1f2937;
+
+    color: white;
+}
+
+.menu-btn.activo {
+    background: #064e3b;
+
+    color: white;
+
+    box-shadow:
+        inset 0 -3px 0 #10b981;
+}
+
+
+/* =========================
+   CONTENIDO PRINCIPAL
+========================= */
+
+main {
+    width: 100%;
+
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 35px 20px;
+
+    flex: 1;
+}
+
+.seccion {
+    width: 100%;
+}
+
+
+/* =========================
+   TÍTULOS
+========================= */
+
+.titulo-seccion {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 30px;
+}
+
+.titulo-icono {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 10px;
+
+    background: #064e3b;
+
+    color: #10b981;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.titulo-seccion h2 {
+    color: #111827;
+
+    font-size: 24px;
+
+    margin-bottom: 4px;
+}
+
+.titulo-seccion p {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   TARJETAS INICIO
+========================= */
+
+.informacion {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.tarjeta {
+    background: white;
+
+    border: 1px solid #d1d5db;
+
+    border-left:
+        4px solid #10b981;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.07);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.tarjeta-icono {
+    min-width: 42px;
+    height: 42px;
+
+    border-radius: 9px;
+
+    background: #ecfdf5;
+
+    color: #047857;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    font-size: 13px;
+}
+
+.tarjeta h3 {
+    font-size: 16px;
+
+    color: #111827;
+
+    margin-bottom: 6px;
+}
+
+.tarjeta p {
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #6b7280;
+}
+
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+.formulario {
+    width: 100%;
+
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 25px;
+
+    background: white;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 7px 20px rgba(0, 0, 0, 0.08);
+}
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.campo input {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    background: #f9fafb;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border 0.2s,
+        box-shadow 0.2s;
+}
+
+.campo input:focus {
+    border-color: #10b981;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+
+/* =========================
+   BOTÓN CALCULAR
+========================= */
+
+.btn-calcular {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #059669,
+        #047857
+    );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.btn-calcular:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(5, 150, 105, 0.30);
+}
+
+
+/* =========================
+   RESULTADO
+========================= */
+
+.resultado {
+    width: 100%;
+
+    max-width: 600px;
+
+    margin: 20px auto 0;
+
+    background: white;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 7px 20px rgba(0, 0, 0, 0.08);
+}
+
+.resultado h3 {
+    padding: 15px 20px;
+
+    background: #111827;
+
+    color: white;
+
+    font-size: 16px;
+
+    border-bottom:
+        3px solid #10b981;
+}
+
+.resultado p {
+    padding: 8px 20px;
+
+    font-size: 13px;
+
+    color: #374151;
+}
+
+.resultado hr {
+    border: none;
+
+    border-top:
+        1px solid #e5e7eb;
+
+    margin: 7px 20px;
+}
+
+.resultado .total {
+    padding: 15px 20px;
+
+    margin: 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #ecfdf5;
+
+    color: #047857;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   ERRORES
+========================= */
+
+.error {
+    max-width: 600px;
+
+    margin: 20px auto 0;
+
+    padding: 14px 18px;
+
+    border-radius: 8px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #b91c1c;
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+
+/* =========================
+   PIE DE PÁGINA
+========================= */
+
+footer {
+    min-height: 35px;
+
+    padding: 8px 20px;
+
+    background: #111827;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 750px) {
+
+    .menu-contenedor {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+
+    .menu-btn {
+        white-space: nowrap;
+
+        padding: 14px 15px;
+    }
+
+    .informacion {
+        grid-template-columns: 1fr;
+    }
+
+    .logo {
+        justify-content: center;
+
+        text-align: center;
+    }
+
+    .logo-icono {
+        display: none;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 20px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    main {
+        padding: 25px 12px;
+    }
+
+    .formulario {
+        padding: 18px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 4px;
+
+        text-align: center;
+    }
+}
