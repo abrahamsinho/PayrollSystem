@@ -1,4 +1,5 @@
 import { EmpleadoAsalariado } from "./models/EmpleadoAsalariado.js";
+import { EmpleadoPorHoras } from "./models/EmpleadoPorHoras.js";
 
 const app = document.getElementById("app");
 
@@ -177,6 +178,96 @@ function manejarFormularioAsalariado(evento) {
     mostrarResultado(empleado, salarioBruto, beneficios);
 }
 
+// Formulario y procesamiento del empleado remunerado por horas.
+function mostrarFormularioPorHoras() {
+    app.innerHTML = `
+        <section class="seccion">
+            <h2>Empleado por Horas</h2>
+            <p>Las horas que superen 40 se pagan con un recargo del 50 %.</p>
+
+            <form id="formPorHoras" class="formulario">
+                <div class="campo">
+                    <label for="nombre">Nombre del empleado:</label>
+                    <input type="text" id="nombre" placeholder="Ejemplo: Ana Gómez" required>
+                </div>
+
+                <div class="campo">
+                    <label for="tarifaHora">Tarifa por hora:</label>
+                    <input type="number" id="tarifaHora" placeholder="Ejemplo: 25000" min="0" step="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="horasTrabajadas">Horas trabajadas:</label>
+                    <input type="number" id="horasTrabajadas" placeholder="Ejemplo: 45" min="0" step="0.5" required>
+                </div>
+
+                <button type="submit" class="btn-calcular">Calcular nómina</button>
+            </form>
+
+            <div id="resultado"></div>
+        </section>
+    `;
+
+    document
+        .getElementById("formPorHoras")
+        .addEventListener("submit", manejarFormularioPorHoras);
+}
+
+function manejarFormularioPorHoras(evento) {
+    evento.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const tarifaHora = Number(document.getElementById("tarifaHora").value);
+    const horasTrabajadas = Number(
+        document.getElementById("horasTrabajadas").value
+    );
+
+    if (nombre === "") {
+        mostrarError("Debe ingresar el nombre del empleado.");
+        return;
+    }
+
+    if (tarifaHora < 0 || horasTrabajadas < 0) {
+        mostrarError("La tarifa y las horas trabajadas no pueden ser negativas.");
+        return;
+    }
+
+    const empleado = new EmpleadoPorHoras(
+        1,
+        nombre,
+        tarifaHora,
+        horasTrabajadas
+    );
+
+    mostrarResultadoPorHoras(empleado);
+}
+
+function mostrarResultadoPorHoras(empleado) {
+    const resultado = document.getElementById("resultado");
+
+    resultado.innerHTML = `
+        <div class="resultado">
+            <h3>Resultado de la nómina</h3>
+            <p><strong>Empleado:</strong> ${empleado.nombre}</p>
+            <p><strong>Tarifa por hora:</strong> ${formatoDinero(empleado.tarifaHora)}</p>
+            <p><strong>Horas ordinarias:</strong> ${empleado.calcularHorasOrdinarias()}</p>
+            <p><strong>Pago horas ordinarias:</strong> ${formatoDinero(empleado.calcularPagoHorasOrdinarias())}</p>
+            <p><strong>Horas extras:</strong> ${empleado.calcularHorasExtras()}</p>
+            <p><strong>Pago horas extras (150 %):</strong> ${formatoDinero(empleado.calcularPagoHorasExtras())}</p>
+            <p><strong>Bonos:</strong> ${empleado.obtenerBeneficios().descripcion}</p>
+            <hr>
+            <p class="total"><strong>Salario bruto:</strong> ${formatoDinero(empleado.calcularSalarioBruto())}</p>
+            <button id="btnReiniciarPorHoras" class="btn-reiniciar" type="button">
+                Realizar otro cálculo
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("btnReiniciarPorHoras")
+        .addEventListener("click", mostrarFormularioPorHoras);
+}
+
 // Muestra el resultado
 function mostrarResultado(empleado, salarioBruto, beneficios) {
     const resultado = document.getElementById("resultado");
@@ -218,8 +309,16 @@ function mostrarResultado(empleado, salarioBruto, beneficios) {
                 ${formatoDinero(salarioBruto)}
             </p>
 
+            <button id="btnReiniciarAsalariado" class="btn-reiniciar" type="button">
+                Realizar otro cálculo
+            </button>
+
         </div>
     `;
+
+    document
+        .getElementById("btnReiniciarAsalariado")
+        .addEventListener("click", mostrarFormularioAsalariado);
 }
 
 // Muestra errores
@@ -241,9 +340,7 @@ btnAsalariado.addEventListener(
     mostrarFormularioAsalariado
 );
 
-btnHoras.addEventListener("click", () => {
-    alert("El punto 2 todavía está en desarrollo.");
-});
+btnHoras.addEventListener("click", mostrarFormularioPorHoras);
 
 btnComision.addEventListener("click", () => {
     alert("El punto 3 todavía está en desarrollo.");

@@ -427,6 +427,32 @@ main {
         0 5px 12px rgba(5, 150, 105, 0.30);
 }
 
+.btn-reiniciar {
+    width: calc(100% - 40px);
+
+    margin: 0 20px 20px;
+
+    border: 1px solid #047857;
+
+    border-radius: 7px;
+
+    padding: 11px;
+
+    background: white;
+
+    color: #047857;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.btn-reiniciar:hover {
+    background: #ecfdf5;
+}
+
 
 /* =========================
    RESULTADO

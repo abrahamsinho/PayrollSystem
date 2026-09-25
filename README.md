@@ -1,2 +1,4 @@
-# PayrollSystem
-Bienvenidos al mejor y más eficiente sistema de nómina llamado PayrollSystem, aquí podras manejar tus finanzas de manera adecuada.
+# Sistema de Nomina
+
+Aplicacion web para calcular nomina por tipo de empleado. Actualmente incluye
+el empleado asalariado y el empleado por horas.
