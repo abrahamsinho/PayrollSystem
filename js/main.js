@@ -1,5 +1,6 @@
 import { EmpleadoAsalariado } from "./models/EmpleadoAsalariado.js";
 import { EmpleadoPorHoras } from "./models/EmpleadoPorHoras.js";
+import { EmpleadoPorComision } from "./models/EmpleadoPorComision.js";
 
 const app = document.getElementById("app");
 
@@ -268,6 +269,122 @@ function mostrarResultadoPorHoras(empleado) {
         .addEventListener("click", mostrarFormularioPorHoras);
 }
 
+// Formulario y procesamiento del empleado por comisión.
+function mostrarFormularioPorComision() {
+    app.innerHTML = `
+        <section class="seccion">
+            <h2>Empleado por Comisión</h2>
+            <p>Salario base, comisión sobre ventas y bono adicional del 3 % si las ventas superan $20.000.000.</p>
+
+            <form id="formPorComision" class="formulario">
+                <div class="campo">
+                    <label for="nombre">Nombre del empleado:</label>
+                    <input type="text" id="nombre" placeholder="Ejemplo: Carlos Pérez" required>
+                </div>
+
+                <div class="campo">
+                    <label for="salarioBase">Salario base:</label>
+                    <input type="number" id="salarioBase" placeholder="Ejemplo: 1300000" min="0" step="1000" required>
+                </div>
+
+                <div class="campo">
+                    <label for="antiguedad">Antigüedad en años:</label>
+                    <input type="number" id="antiguedad" placeholder="Ejemplo: 2" min="0" step="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="totalVentas">Total ventas del mes:</label>
+                    <input type="number" id="totalVentas" placeholder="Ejemplo: 25000000" min="0" step="1000" required>
+                </div>
+
+                <div class="campo">
+                    <label for="porcentajeComision">Porcentaje de comisión (%):</label>
+                    <input type="number" id="porcentajeComision" placeholder="Ejemplo: 5" min="0" max="100" step="0.1" required>
+                </div>
+
+                <button type="submit" class="btn-calcular">Calcular nómina</button>
+            </form>
+
+            <div id="resultado"></div>
+        </section>
+    `;
+
+    document
+        .getElementById("formPorComision")
+        .addEventListener("submit", manejarFormularioPorComision);
+}
+
+function manejarFormularioPorComision(evento) {
+    evento.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const salarioBase = Number(document.getElementById("salarioBase").value);
+    const antiguedad = Number(document.getElementById("antiguedad").value);
+    const totalVentas = Number(document.getElementById("totalVentas").value);
+    const porcentajeComision = Number(document.getElementById("porcentajeComision").value);
+
+    if (nombre === "") {
+        mostrarError("Debe ingresar el nombre del empleado.");
+        return;
+    }
+
+    if (salarioBase < 0) {
+        mostrarError("El salario base no puede ser negativo.");
+        return;
+    }
+
+    if (totalVentas < 0) {
+        mostrarError("Las ventas no pueden ser menores a $0.");
+        return;
+    }
+
+    if (porcentajeComision < 0) {
+        mostrarError("El porcentaje de comisión no puede ser negativo.");
+        return;
+    }
+
+    try {
+        const empleado = new EmpleadoPorComision(
+            1,
+            nombre,
+            salarioBase,
+            antiguedad,
+            totalVentas,
+            porcentajeComision
+        );
+
+        mostrarResultadoPorComision(empleado);
+    } catch (error) {
+        mostrarError(error.message);
+    }
+}
+
+function mostrarResultadoPorComision(empleado) {
+    const resultado = document.getElementById("resultado");
+    const beneficios = empleado.obtenerBeneficios();
+
+    resultado.innerHTML = `
+        <div class="resultado">
+            <h3>Resultado de la nómina</h3>
+            <p><strong>Empleado:</strong> ${empleado.nombre}</p>
+            <p><strong>Salario base:</strong> ${formatoDinero(empleado.salarioBase)}</p>
+            <p><strong>Total ventas:</strong> ${formatoDinero(empleado.totalVentas)}</p>
+            <p><strong>Comisión sobre ventas:</strong> ${formatoDinero(beneficios.comision)}</p>
+            <p><strong>Bono adicional ventas (> $20M):</strong> ${formatoDinero(beneficios.bonoVentas)}</p>
+            <p><strong>Bono de alimentación:</strong> ${formatoDinero(beneficios.bonoAlimentacion)}</p>
+            <hr>
+            <p class="total"><strong>Salario bruto:</strong> ${formatoDinero(empleado.calcularSalarioBruto())}</p>
+            <button id="btnReiniciarPorComision" class="btn-reiniciar" type="button">
+                Realizar otro cálculo
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("btnReiniciarPorComision")
+        .addEventListener("click", mostrarFormularioPorComision);
+}
+
 // Muestra el resultado
 function mostrarResultado(empleado, salarioBruto, beneficios) {
     const resultado = document.getElementById("resultado");
@@ -342,9 +459,7 @@ btnAsalariado.addEventListener(
 
 btnHoras.addEventListener("click", mostrarFormularioPorHoras);
 
-btnComision.addEventListener("click", () => {
-    alert("El punto 3 todavía está en desarrollo.");
-});
+btnComision.addEventListener("click", mostrarFormularioPorComision);
 
 btnTemporal.addEventListener("click", () => {
     alert("El punto 4 todavía está en desarrollo.");
