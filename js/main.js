@@ -1,5 +1,6 @@
 import { EmpleadoAsalariado } from "./models/EmpleadoAsalariado.js";
 import { EmpleadoPorHoras } from "./models/EmpleadoPorHoras.js";
+import { EmpleadoTemporal } from "./models/EmpleadoTemporal.js";
 
 const app = document.getElementById("app");
 
@@ -267,6 +268,105 @@ function mostrarResultadoPorHoras(empleado) {
         .getElementById("btnReiniciarPorHoras")
         .addEventListener("click", mostrarFormularioPorHoras);
 }
+// Formulario del empleado temporal
+function mostrarFormularioTemporal() {
+    app.innerHTML = `
+        <section class="seccion">
+            <h2>Empleado Temporal</h2>
+
+            <p>Salario mensual durante el periodo establecido en el contrato.
+            No aplica bonos ni beneficios adicionales.
+            </p>
+
+            <form id="formTemporal" class="formulario">
+                <div class="campo">
+                    <label for="nombre">Nombre del empleado:</label>
+                    <input type="text" id="nombre"placeholder="Ejemplo: Juan Martinez" required>
+                </div>
+
+                <div class="campo">
+                    <label for="salario">Salario mensual:</lable>
+                    <input type="number" id="salario" placeholder="Ejemplo:1800000" min="0" step="1000" required>
+                </div>
+
+                <div class="campo">
+                    <label for="fechaInicio">Fecha de inicio del contrato:</label>
+                    <input type="date"id="fechaInicio" required>
+                    </div>
+
+                <div class="campo">
+                    <label for="fechaFin">Fecha de fin del contrato:</label>
+                    <input type="date" id="fechaFin" required>
+                </div>
+
+                <button type="submit" class="btn-calcular">Calcular nomina</button>
+                </form>
+
+                <div id="resultado"></div>
+        </section>
+    `;
+
+    document 
+        .getElementById("formTemporal")
+        .addEventListener("submit", manejarFormularioTemporal);
+}
+
+// Procesa los datos del formulario del empleado temporal
+function manejarFormularioTemporal(evento) {
+    evento.preventDefault();
+     
+    const nombre = document.getElementById("nombre").value.trim();
+    const salario = Number(document.getElementById("salario").value);
+    const fechaInicio = document.getElementById("fechaInicio").value;
+    const fechaFin = document.getElementById("fechaFin").value; 
+
+    if (nombre === "") {
+        mostrarError("Debe ingresar el nombre del empleado.");
+        return;
+    }   
+
+    if (salario < 0) {
+        mostrarError("El salario no puede ser negativo.");
+        return;
+    }
+
+    try {
+        const empleado = new EmpleadoTemporal(
+            1,
+            nombre,
+            salario,
+            fechaInicio,
+            fechaFin
+        );
+         mostrarResultadoTemporal(empleado);
+
+    } catch (error) {   
+        mostrarError(error.message);
+    }
+// Muestra el resultado del empleado temporal 
+function mostrarResultadoTemporal(empleado) {
+    const resultdao = document.getElementById("resultado");
+    const beneficios = empleado.obtenerBeneficios();
+
+    resultadoinnerHTML = `
+        <div class="resultado">
+            <h3>Resultado de la nómina</h3>
+            <p><strong>Empleado:</strong> ${empleado.nombre}</p>
+            <p><strong>Salario mensual:</strong> ${formatoDinero(empleado.salarioBase)}</p>
+            <p><strong>Duracion del contrato:</strong> ${empleado.calcularDuracionContratoDias()} día(s)</p>
+            <p><strong>Bonos y beneficios:</strong> ${beneficios.descripcion}</p>
+            <hr>
+            <p class="total"><strong>Salario bruto:</strong> ${formatoDinero(empleado.calcularSalarioBruto())}</p>
+            <button id="btnReiniciarTemporal" class="btn-reiniciar" type="button">
+                Realizar otro cálculo
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("btnReiniciarTemporal")
+        .addEventListener("click", mostrarFormularioTemporal);
+}
 
 // Muestra el resultado
 function mostrarResultado(empleado, salarioBruto, beneficios) {
@@ -346,6 +446,4 @@ btnComision.addEventListener("click", () => {
     alert("El punto 3 todavía está en desarrollo.");
 });
 
-btnTemporal.addEventListener("click", () => {
-    alert("El punto 4 todavía está en desarrollo.");
-});
+btnTemporal.addEventListener("click", mostrarFormularioTemporal); 
