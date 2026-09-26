@@ -11,6 +11,13 @@ const btnHoras = document.getElementById("btnHoras");
 const btnComision = document.getElementById("btnComision");
 const btnTemporal = document.getElementById("btnTemporal");
 
+app.addEventListener("click", evento => {
+    const tarjeta = evento.target.closest(".tarjeta[data-destino]");
+    if (tarjeta) {
+        document.getElementById(tarjeta.dataset.destino).click();
+    }
+});
+
 // Formato de moneda colombiana
 function formatoDinero(valor) {
     return valor.toLocaleString("es-CO", {
@@ -36,25 +43,25 @@ function mostrarInicio() {
             <p>Seleccione un tipo de empleado en el menú para realizar el cálculo correspondiente.</p>
 
             <div class="informacion">
-                <div class="tarjeta">
+                <button type="button" class="tarjeta" data-destino="btnAsalariado">
                     <h3>1. Asalariado</h3>
                     <p>Salario fijo mensual y bono según la antigüedad del empleado.</p>
-                </div>
+                </button>
 
-                <div class="tarjeta">
+                <button type="button" class="tarjeta" data-destino="btnHoras">
                     <h3>2. Por Horas</h3>
                     <p>Cálculo según horas normales y horas extras trabajadas.</p>
-                </div>
+                </button>
 
-                <div class="tarjeta">
+                <button type="button" class="tarjeta" data-destino="btnComision">
                     <h3>3. Por Comisión</h3>
                     <p>Salario base, comisión sobre ventas y posible bono adicional.</p>
-                </div>
+                </button>
 
-                <div class="tarjeta">
+                <button type="button" class="tarjeta" data-destino="btnTemporal">
                     <h3>4. Temporal</h3>
                     <p>Salario fijo durante el período establecido en el contrato.</p>
-                </div>
+                </button>
             </div>
         </section>
     `;
